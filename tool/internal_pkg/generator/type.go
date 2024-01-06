@@ -88,6 +88,12 @@ type PkgInfo struct {
 	ImportPath string
 }
 
+// Annotation .
+type Annotation struct {
+	Key    string
+	Values []string
+}
+
 // ServiceInfo .
 type ServiceInfo struct {
 	PkgInfo
@@ -101,6 +107,7 @@ type ServiceInfo struct {
 	ServiceFilePath       string
 	Protocol              string
 	HandlerReturnKeepResp bool
+	Annotations           []*Annotation
 }
 
 // AllMethods returns all methods that the service have.

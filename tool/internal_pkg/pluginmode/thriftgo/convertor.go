@@ -399,6 +399,7 @@ func (c *converter) makeService(pkg generator.PkgInfo, svc *golang.Service) (*ge
 		PkgInfo:        pkg,
 		ServiceName:    svc.GoName().String(),
 		RawServiceName: svc.Name,
+		Annotations:    convertAnnotations(svc.Annotations),
 	}
 	si.ServiceTypeName = func() string { return si.PkgRefName + "." + si.ServiceName }
 
@@ -500,4 +501,12 @@ func (c *converter) getCombineServiceName(name string, svcs []*generator.Service
 
 func (c *converter) IsHessian2() bool {
 	return strings.EqualFold(c.Config.Protocol, transport.HESSIAN2.String())
+}
+
+func convertAnnotations(annotations parser.Annotations) []*generator.Annotation {
+	res := make([]*generator.Annotation, 0, len(annotations))
+	for _, annotation := range annotations {
+		res = append(res, &generator.Annotation{Key: annotation.Key, Values: annotation.Values})
+	}
+	return res
 }
